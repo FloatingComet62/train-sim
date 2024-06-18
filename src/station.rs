@@ -1,6 +1,6 @@
-use std::fmt::{Display, Debug};
+use std::fmt::{Debug, Display};
 
-#[derive(Clone)]
+#[derive(Clone, PartialEq)]
 pub struct Station(pub u32);
 
 #[derive(Clone)]
@@ -57,4 +57,3 @@ pub fn stops_builder(
         });
     Some(stops)
 }
-

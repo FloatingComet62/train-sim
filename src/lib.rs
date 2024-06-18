@@ -1,2 +1,3 @@
-pub mod train;
+pub mod customer;
 pub mod station;
+pub mod train;
