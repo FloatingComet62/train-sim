@@ -7,12 +7,12 @@ pub struct Train {
 }
 impl Display for Train {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("Train({}){{{:?}}}", self.id, self.stops))
+        f.write_fmt(format_args!("Train({}){{{:#?}}}", self.id, self.stops))
     }
 }
 impl Debug for Train {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_fmt(format_args!("Train({}){{{:?}}}", self.id, self.stops))
+        f.write_fmt(format_args!("Train({}){{{:#?}}}", self.id, self.stops))
     }
 }
 

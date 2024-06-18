@@ -10,5 +10,5 @@ fn main() {
         .iter()
         .map(|&n| TrainBuilder::new(n).add_stops(&stops[n as usize]).build())
         .collect();
-    println!("Hello, world!\n{:?}", trains);
+    println!("Hello, world!\n{:#?}", trains);
 }
