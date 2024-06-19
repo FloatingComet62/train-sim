@@ -13,13 +13,6 @@ enum LogLevel {
     ERROR = 2,
 }
 
-enum LogType {
-    INFO,
-    WARN,
-    ERROR,
-    ERRORDEBUG,
-}
-
 pub struct Log {
     log_level: LogLevel,
     output_file: Option<String>,
@@ -32,12 +25,11 @@ impl Log {
             output_file: None,
         }
     }
-    fn fmt(log_type: LogType, spacing: &str, message: &str) -> String {
+    fn fmt(log_type: LogLevel, spacing: &str, message: &str) -> String {
         match log_type {
-            LogType::INFO => format!("[{}]{} {}", "Info".bold().green(), spacing, message),
-            LogType::WARN => format!("[{}]{} {}", "Warn".bold().yellow(), spacing, message),
-            LogType::ERROR => format!("[{}]{} {}", "Error".bold().red(), spacing, message),
-            LogType::ERRORDEBUG => format!("[{}]{} {}", "Error".bold().red(), spacing, message),
+            LogLevel::INFO => format!("[{}]{} {}", "Info".bold().green(), spacing, message),
+            LogLevel::WARN => format!("[{}]{} {}", "Warn".bold().yellow(), spacing, message),
+            LogLevel::ERROR => format!("[{}]{} {}", "Error".bold().red(), spacing, message),
         }
     }
 
@@ -99,11 +91,11 @@ impl Log {
     }
 
     pub fn critical_stdout(&self, message: &str) -> ! {
-        println!("{}", Log::fmt(LogType::ERROR, "", message));
+        println!("{}", Log::fmt(LogLevel::ERROR, "", message));
         process::exit(1);
     }
     pub fn critical_file(&self, message: &str) -> ! {
-        self.to_file(&Log::fmt(LogType::ERROR, "", message));
+        self.to_file(&Log::fmt(LogLevel::ERROR, "", message));
         process::exit(1);
     }
 
@@ -111,7 +103,7 @@ impl Log {
         println!(
             "{}",
             Log::fmt(
-                LogType::ERRORDEBUG,
+                LogLevel::ERROR,
                 &format!("[{}:{}]", file, line),
                 message,
             )
@@ -120,7 +112,7 @@ impl Log {
     }
     pub fn critical_debug_file(&self, file: &str, line: u32, message: &str) -> ! {
         self.to_file(&Log::fmt(
-            LogType::ERRORDEBUG,
+            LogLevel::ERROR,
             &format!("[{}:{}]", file, line),
             message,
         ));
@@ -135,7 +127,7 @@ impl Log {
         let err = |t: &str, e: Error| {
             println!(
                 "{}\n{}",
-                Log::fmt(LogType::ERROR, "", &format!("Failed to {} the file", t)),
+                Log::fmt(LogLevel::ERROR, "", &format!("Failed to {} the file", t)),
                 e
             );
         };
