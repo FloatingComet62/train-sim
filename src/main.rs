@@ -30,7 +30,7 @@ fn main() {
         }
 
         trains.iter_mut().for_each(|train| train.update_state(time));
-        println!("{} {:#?}", time, trains);
+        log!(info object trains);
         time += 1;
     }
 }

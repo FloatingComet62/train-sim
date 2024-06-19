@@ -162,36 +162,21 @@ macro_rules! log {
     (info $($e: expr),*) => {
         crate::log::Log::info(&format!($($e),*));
     };
-    (info crate $($e: expr),*) => {
-        crate::log::Log::info(&format!($($e),*));
+    (info object $obj: expr) => {
+        crate::log::Log::info(&format!("{:?}", $obj));
     };
-    // (info object $obj: expr) => {
-    //     crate::log::Log::info(
-    //         &("\n".to_string() + &serde_yaml::to_string(&$obj).unwrap_or(format!("{:?}", $obj))),
-    //     );
-    // };
     (warn $($e: expr),*) => {
         crate::log::Log::warn(&format!($($e),*));
     };
-    (warn crate $($e: expr),*) => {
-        crate::log::Log::warn(&format!($($e),*));
+    (warn object $obj: expr) => {
+        crate::log::Log::warn(&format!("{:?}", $obj));
     };
-    // (warn object $obj: expr) => {
-    //     crate::log::Log::warn(
-    //         &("\n".to_string() + &serde_yaml::to_string(&$obj).unwrap_or(format!("{:?}", $obj))),
-    //     );
-    // };
     (err $($e: expr),*) => {
         crate::log::Log::critical_debug(&format!($($e),*), file!(), line!());
     };
-    (err crate $($e: expr),*) => {
-        crate::log::Log::critical_debug(&format!($($e),*), file!(), line!());
+    (err object $obj: expr) => {
+        crate::log::Log::critical_debug(&format!("{:?}", $obj));
     };
-    // (err object $obj: expr) => {
-    //     crate::log::Log::critical_debug(
-    //         &("\n".to_string() + &serde_yaml::to_string(&$obj).unwrap_or(format!("{:?}", $obj))),
-    //     );
-    // };
 }
 
 #[cfg(not(debug_assertions))]
@@ -200,34 +185,19 @@ macro_rules! log {
     (info $($e: expr),*) => {
         crate::log::Log::info(&format!($($e),*));
     };
-    (info crate $($e: expr),*) => {
-        crate::log::Log::info(&format!($($e),*));
-    };
     (info object $obj: expr) => {
-        crate::log::Log::info(
-            &("\n".to_string() + &serde_yaml::to_string(&$obj).unwrap_or(format!("{:?}", $obj))),
-        );
+        crate::log::Log::info(&format!("{:?}", $obj));
     };
     (warn $($e: expr),*) => {
         crate::log::Log::warn(&format!($($e),*));
     };
-    (warn crate $($e: expr),*) => {
-        crate::log::Log::warn(&format!($($e),*));
-    };
     (warn object $obj: expr) => {
-        crate::log::Log::warn(
-            &("\n".to_string() + &serde_yaml::to_string(&$obj).unwrap_or(format!("{:?}", $obj))),
-        );
+        crate::log::Log::warn(&format!("{:?}", $obj));
     };
     (err $($e: expr),*) => {
         crate::log::Log::critical(&format!($($e),*));
     };
-    (err crate $($e: expr),*) => {
-        crate::log::Log::critical(&format!($($e),*));
-    };
     (err object $obj: expr) => {
-        crate::log::Log::critical(
-            &("\n".to_string() + &serde_yaml::to_string(&$obj).unwrap_or(format!("{:?}", $obj))),
-        );
+        crate::log::Log::critical(&format!("{:?}", $obj));
     };
 }
