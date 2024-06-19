@@ -1,23 +1,31 @@
 use trains::{
-    station::{stops_builder, Station, Stop},
+    log,
+    station::{stops_builder, Station},
     train::{Train, TrainBuilder},
 };
+
+static MAX_ITERATIONS: u64 = 65535;
 
 fn main() {
     let mut time: u64 = 0;
 
     let stations: Vec<Station> = (0..5).map(|n| Station(n)).collect();
-    let stops: Vec<Vec<Stop>> = vec![0, 3, 5]
+    let mut trains: Vec<Train> = vec![0, 3, 5]
         .iter()
-        .map(|&n| stops_builder(&stations, n, &vec![2; 10]).unwrap())
-        .collect();
-    let mut trains: Vec<Train> = vec![0, 1, 2]
-        .iter()
-        .map(|&n| TrainBuilder::new(n).add_stops(&stops[n as usize]).build())
+        .enumerate()
+        .map(|(n, &m)| {
+            TrainBuilder::new(n as u32)
+                .add_stops(&stops_builder(&stations, m, &vec![2; 10]).unwrap())
+                .build()
+        })
         .collect();
 
     loop {
-        if trains.iter().all(|train| train.reached_end()) && time != 0 {
+        if time > MAX_ITERATIONS {
+            log!(err "Fail save triggered");
+            break;
+        }
+        if trains.iter().all(|train| train.reached_end()) {
             break;
         }
 
