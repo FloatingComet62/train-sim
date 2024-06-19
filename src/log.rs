@@ -68,26 +68,26 @@ impl Log {
         if self.log_level > LogLevel::INFO {
             return;
         }
-        println!("{}", Log::fmt(LogType::INFO, "", message));
+        println!("{}", Log::fmt(LogLevel::INFO, "", message));
     }
     pub fn info_file(&self, message: &str) {
         if self.log_level > LogLevel::INFO {
             return;
         }
-        self.to_file(&Log::fmt(LogType::INFO, "", message));
+        self.to_file(&Log::fmt(LogLevel::INFO, "", message));
     }
 
     pub fn warn_stdout(&self, message: &str) {
         if self.log_level > LogLevel::WARN {
             return;
         }
-        println!("{}", Log::fmt(LogType::WARN, "", message));
+        println!("{}", Log::fmt(LogLevel::WARN, "", message));
     }
     pub fn warn_file(&self, message: &str) {
         if self.log_level > LogLevel::WARN {
             return;
         }
-        self.to_file(&Log::fmt(LogType::WARN, "", message));
+        self.to_file(&Log::fmt(LogLevel::WARN, "", message));
     }
 
     pub fn critical_stdout(&self, message: &str) -> ! {
