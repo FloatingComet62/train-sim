@@ -102,11 +102,7 @@ impl Log {
     pub fn critical_debug_stdout(&self, file: &str, line: u32, message: &str) -> ! {
         println!(
             "{}",
-            Log::fmt(
-                LogLevel::ERROR,
-                &format!("[{}:{}]", file, line),
-                message,
-            )
+            Log::fmt(LogLevel::ERROR, &format!("[{}:{}]", file, line), message,)
         );
         process::exit(1);
     }

@@ -1,5 +1,9 @@
 use crate::station::{Station, Stop};
-use std::fmt::{Debug, Display};
+use std::slice::Iter;
+use std::{
+    fmt::{Debug, Display},
+    iter::FilterMap,
+};
 
 #[derive(PartialEq)]
 pub struct MovingState {
@@ -47,6 +51,20 @@ impl Train {
     }
     fn get_stop(&self, i: &usize) -> &Stop {
         &self.stops[i / 2]
+    }
+    pub fn upcoming_stops(
+        &self,
+        time: u64,
+    ) -> FilterMap<Iter<'_, Stop>, impl Fn(&Stop) -> Option<Stop>> {
+        let binding = |time: u64| {
+            move |stop: &Stop| {
+                if stop.departure_unixtimestamp <= time {
+                    return None;
+                }
+                Some(stop.clone())
+            }
+        };
+        self.stops.iter().filter_map(binding(time))
     }
     pub fn reached_end(&self) -> bool {
         self.stop_index >= 2 * self.stops.len()
@@ -118,7 +136,6 @@ impl TrainBuilder {
     pub fn new(id: u32) -> Self {
         Self { id, stops: vec![] }
     }
-    #[allow(dead_code)]
     pub fn add_stop(self, stop: &Stop) -> Self {
         let mut stops = self.stops.clone();
         stops.push(stop.clone());
