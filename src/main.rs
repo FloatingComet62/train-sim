@@ -5,7 +5,6 @@ use trains::{
 static MAX_ITERATIONS: u64 = 65535;
 
 fn main() {
-    // change to test signing commits on a new system
     let mut time: u64 = 0;
 
     let stations: Vec<Station> = (0..5).map(|n| Station(n)).collect();
