@@ -32,6 +32,9 @@ int main(int argc, char **argv) {
 
     nob_cc_inputs(&cmd, SRC_FOLDER "main.c");
     nob_cc_inputs(&cmd, SRC_FOLDER "log.c");
+    nob_cc_inputs(&cmd, SRC_FOLDER "train_network.c");
+    nob_cc_inputs(&cmd, SRC_FOLDER "train.c");
+    nob_cc_inputs(&cmd, SRC_FOLDER "position.c");
 
     if (!nob_cmd_run_sync_and_reset(&cmd)) return 1;
     if (!AUTO_RUN) return 0;
